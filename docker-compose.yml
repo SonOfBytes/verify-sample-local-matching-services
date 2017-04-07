@@ -1,0 +1,24 @@
+version: "2"
+services:
+  tests:
+    build:
+      context: local-matching-service-tests
+    ports:
+      - 80:80
+    environment:
+      - GO_PORT=8080
+      - RUBY_PORT=50139
+    links:
+      - go
+      - ruby
+  go:
+    build:
+      context: go
+    ports:
+      - 8080
+  ruby:
+    build:
+      context: ruby
+    ports:
+      - 50139
+

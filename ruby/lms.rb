@@ -5,6 +5,7 @@ require 'json'
 
 set :server, 'webrick'
 set :port, 50139
+set :bind, '0.0.0.0'
 
 def get_body(request)
   encoding = request.env['HTTP_CONTENT_ENCODING']
@@ -15,7 +16,7 @@ def get_body(request)
   JSON.parse request_body
 end
 
-post '/ruby/matching-service', :provides => 'application/json' do
+post '/matching-service', :provides => 'application/json' do
   body = get_body(request)
 
   return JSON.generate({ result: "no-match" }) if body['levelOfAssurance'] != 'LEVEL_2'
@@ -29,7 +30,7 @@ post '/ruby/matching-service', :provides => 'application/json' do
   JSON.generate({ result: "no-match" })
 end
 
-post '/ruby/account-creation', :provides => 'application/json' do
+post '/account-creation', :provides => 'application/json' do
   body = get_body(request)
 
   return JSON.generate({ result: "failure" }) if body['levelOfAssurance'] != 'LEVEL_2'
